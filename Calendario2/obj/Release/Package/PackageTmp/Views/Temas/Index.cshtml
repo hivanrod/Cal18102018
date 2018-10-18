@@ -133,7 +133,7 @@
         { @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger glyphicon glyphicon-remove" }) }
                             }
                             <div class="row">
-                                @Html.ActionLink(" " + @striiii, "Index","Archivos", new { id = item.Id, viene = ViewBag.viene }, new { @class = "btn btn-danger glyphicon glyphicon-cloud-upload" })
+                                @Html.ActionLink(" " + @striiii, "Index","Archivos", new { id = item.Id, viene = ViewBag.viene, Nombre = item.Descripcion }, new { @class = "btn btn-danger glyphicon glyphicon-cloud-upload" })
                             </div>
 
                         </td>

@@ -29,3 +29,17 @@ textarea {
 .regular {
     background-color:darkgray;
 }
+.SideL {
+    text-align: end;
+    border-radius: 4px;
+}
+.LNK1 {
+    font-size: 25px;
+    font-family: Tahoma;
+    color: crimson;
+    background-color: aliceblue;
+    border-radius: 4px;
+}
+.tb2 {
+    width: 100%;
+}

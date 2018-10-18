@@ -11,13 +11,6 @@
     <h4>Archivo</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Orden)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Orden)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Nombre)
@@ -28,19 +21,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Cliente.Nombres)
+            Tema o Carpeta
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Cliente.Nombres)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tema.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tema.Nombre)
+            @ViewBag.Nombre
         </dd>
 
     </dl>
@@ -49,8 +34,9 @@
     {
         @Html.AntiForgeryToken()
         <div class="form-actions no-color">
+            <input type="hidden" name="Nombre" id="Nombre" value="@ViewBag.Nombre" />
             <input type="submit" value="Delete" class="btn alert-danger" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "Index","Archivos",new { @id=ViewBag.IdTema, @Nombre= ViewBag.Nombre },null)
         </div>
     }
 </div>

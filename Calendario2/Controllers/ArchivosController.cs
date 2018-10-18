@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Calendario2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace INTRANETVOID.Controllers
 {
@@ -18,7 +19,7 @@ namespace INTRANETVOID.Controllers
         private xcursorc_calEntities db2 = new xcursorc_calEntities();
 
         // GET: Archivos
-        public ActionResult Index(int? Id)
+        public ActionResult Index(int? Id,string viene,string Nombre)
         {
             if (Id == null)
             {
@@ -27,12 +28,14 @@ namespace INTRANETVOID.Controllers
 
             var arc = from t in db.Archivos
                        where t.IdTema.ToString() == Id.ToString()
-                       orderby t.IdTema
+                       orderby t.Nombre
                        select t;
             var tem = from t2 in db.Temas
                       where t2.Id == Id
                       select t2;
-            ViewBag.Tema = tem.SingleOrDefault().Descripcion.ToString();
+            ViewBag.Nombre = tem.SingleOrDefault().Descripcion.ToString();
+            ViewBag.IdTema = Id;
+            //ViewBag.Nombre = Nombre;
             return View(arc.ToList());
         }
 
@@ -52,10 +55,12 @@ namespace INTRANETVOID.Controllers
         }
 
         // GET: Archivos/Create
-        public ActionResult Create()
+        public ActionResult Create(string tema,int? IdTema)
         {
             //ViewBag.IdCliente = new SelectList(db.Clientes.OrderBy(s => s.Nombres), "Id", "Nombres");
-            ViewBag.IdTema = new SelectList(db.Temas.OrderBy(s => s.Descripcion), "Id", "Descripcion");
+            //ViewBag.IdTema = new SelectList(db.Temas.OrderBy(s => s.Descripcion), "Id", "Descripcion");
+            ViewBag.IdTema = IdTema;
+            ViewBag.tema = tema;
             return View();
         }
 
@@ -66,40 +71,56 @@ namespace INTRANETVOID.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,IdTema,Nombre")] Archivo archivo, HttpPostedFileBase upload)
         {
+             string tema = "";
             if (ModelState.IsValid)
             {
                 string _path = "";
+                var str_desc = "";
                 if (upload.ContentLength > 0)
                 {
-                    try
-                    {
+                    //try
+                    //{
 
-                        string _FileName = Path.GetFileName(upload.FileName);
-                        string tema = (from t in db.Temas
+                    string currentUserId = User.Identity.GetUserId();
+                    var IdUser = currentUserId;
+
+
+
+                    string _FileName = Path.GetFileName(upload.FileName);
+                        tema = (from t in db.Temas
                                        where t.Id.ToString() == archivo.IdTema.ToString()
                                        select t.Descripcion).First().ToString();
 
-                        string strPath = "~/Views/Shared/Upload/" + tema;
+                        string strPath = "~/Views/Shared/Upload/" + tema.ToString();
                         _path = Path.Combine(Server.MapPath(strPath), _FileName);
+                        // se crea directorio si no hay archivos para ese tema, es el primer archivo que se carga
+                        int cuantos = (from s in db.Archivos
+                                       where s.Id.ToString() == archivo.IdTema.ToString()
+                                       select s).Count();
+                        if (cuantos == 0)
+                        {
+                           Directory.CreateDirectory(Server.MapPath(strPath));
+                        }
                         upload.SaveAs(_path);
                         // crea en db
                         db.Archivos.Add(archivo);
                         archivo.Nombre = _FileName;
+                        archivo.UserId = IdUser;
                         db.SaveChanges();
 
                         // agrega el log historico
-                        var str_desc = "Crea archivo - " + archivo.Nombre.ToString() + " - en carpeta -" + tema + " -";
+                        str_desc = "Crea archivo - " + archivo.Nombre.ToString() + " - en carpeta -" + tema.ToString() + " -";
                         //var proc = db.pa_crear_log(1, str_desc, 1, 1, archivo.IdCliente, 1, 0, System.DateTime.Now);
 
 
 
 
-                        ViewBag.Message = "Archivo cargado exitosamente!!";
-                    }
-                    catch
-                    {
-                        ViewBag.Message = "No se pudo cargar el archivo!!";
-                    }
+                        ViewBag.Message = "Archivo cargado exitosamente!!" + str_desc.ToString();
+                    //}
+                    //catch
+                    //{
+                    //    ViewBag.Message = "No se pudo cargar el archivo!!" + str_desc.ToString();
+                    //}
 
                 }
 
@@ -107,6 +128,7 @@ namespace INTRANETVOID.Controllers
             //ViewBag.IdCliente = new SelectList(db.Clientes.OrderBy(s => s.Nombres), "Id", "Nombres", archivo.IdCliente);
             ViewBag.IdTema = new SelectList(db.Temas.OrderBy(s => s.Descripcion), "Id", "Nombre", archivo.IdTema);
             ViewBag.Message = ViewBag.Message + "-->> Y se creo correctamente el registro en la base de datos!!";
+           //return  RedirectToAction("Index", new { tema });
             return View(archivo);
 
         }
@@ -133,7 +155,7 @@ namespace INTRANETVOID.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdTema,Orden,IdCliente,Nombre,Origen")] Archivo archivo)
+        public ActionResult Edit([Bind(Include = "Id,IdTema,Nombre")] Archivo archivo)
         {
             if (ModelState.IsValid)
             {
@@ -147,13 +169,14 @@ namespace INTRANETVOID.Controllers
         }
 
         // GET: Archivos/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id,string Nombre)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Archivo archivo = db.Archivos.Find(id);
+            ViewBag.Nombre = Nombre;
             if (archivo == null)
             {
                 return HttpNotFound();
@@ -164,30 +187,46 @@ namespace INTRANETVOID.Controllers
         // POST: Archivos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id,string Nombre)
         {
             Archivo archivo = db.Archivos.Find(id);
-            string fullPath = Request.MapPath("~/Views/Shared/Upload/" + archivo.Nombre + "/" + archivo.Nombre.ToString());
+            string fullPath = Request.MapPath("~/Views/Shared/Upload/" + Nombre + "/" + archivo.Nombre.ToString());
             var str_desc = "";
-            //string fullPath = Path.Combine(Server.MapPath(strPath), archivo.Nombre.ToString());
+            var cuantos = 0;
             if (System.IO.File.Exists(fullPath))
             {
                 System.IO.File.Delete(fullPath);
-                str_desc = "Elimina archivo - " + archivo.Nombre.ToString() + " - de carpeta -" + archivo.Nombre.ToString() + " -";
+                str_desc = "Elimina archivo - " + archivo.Nombre.ToString() + " - de carpeta -" + Nombre.ToString() + " -";
+
+
+                var IdTema = archivo.IdTema;
+                // ** Si es el ultimo archivo debe borrar la carpeta
+                cuantos = (from s in db.Archivos
+                               where s.IdTema == IdTema
+                               select s).Count();
             }
             else
             {
-                str_desc = "No se encontró el archivo en el sistema.  Se Elimina archivo de la base de datos - " + archivo.Nombre.ToString() + " - de carpeta -" + archivo.Nombre.ToString() + " -";
+                str_desc = "No se encontró el archivo en el sistema.  Se Elimina archivo de la base de datos - " + archivo.Nombre.ToString() + " - de carpeta -" + Nombre.ToString() + " -";
             }
             // logs
             //var proc = db.pa_crear_log(3, str_desc, 1, 1, archivo.IdCliente, 3, 0, System.DateTime.Now);
             // bprra de bd
             db.Archivos.Remove(archivo);
             db.SaveChanges();
+            ViewBag.Nombre = Nombre;
+            // ** Si es el ultimo archivo debe borrar la carpeta
+            if (cuantos == 1)
+            {
+
+                string strPath = "~/Views/Shared/Upload/" + Nombre;
+                var _path = Path.Combine(Server.MapPath(strPath),"");
+
+                Directory.Delete(_path);
+            }
             TempData["Msg"] = str_desc;
-
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Index",new {Id=archivo.IdTema, Nombre });
+            //return View();
         }
 
         protected override void Dispose(bool disposing)
