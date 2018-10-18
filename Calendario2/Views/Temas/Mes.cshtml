@@ -1,0 +1,285 @@
+﻿@model IEnumerable<Calendario2.Models.Tema>
+@{
+    ViewBag.Title = "Mes Calendario XcursoR";
+}
+
+<div class="container text-center">
+    <h2>@ViewBag.Title</h2>
+</div>
+<div class="container table-responsive">
+
+    <div class="row table-bordered">
+        <div class="col-md-2 text-center">
+            <h3>
+                @ViewBag.dia1[0] @ViewBag.dia1[1]
+                @Html.ActionLink(" ", "Mes", "Temas", new { @Fecha = ViewBag.fecha1.AddDays(-30).Year + "-" + ViewBag.fecha1.AddDays(-6).Month + "-" + ViewBag.fecha1.AddDays(-6).Day }, new { @class = "glyphicon glyphicon-backward" })
+            </h3>
+        </div>
+        <div class="col-md-8 text-center">
+            <h2>@ViewBag.Mes</h2>
+            <h2><strong>@ViewBag.Fecha</strong></h2>
+        </div>
+        <div class="col-md-2 text-center">
+            <h3>
+                @Html.ActionLink(" ", "Mes", "Temas", new { @Fecha = ViewBag.fecha2.AddDays(30).Year + "-" + ViewBag.fecha2.AddDays(6).Month + "-" + ViewBag.fecha2.AddDays(6).Day }, new { @class = "glyphicon glyphicon-forward" })
+                @ViewBag.dia2[0] @ViewBag.dia2[1]
+
+            </h3>
+        </div>
+    </div>
+</div>
+
+@{ DateTime dt2 = Convert.ToDateTime(ViewBag.FechaI).Date;
+    //dt2 = dt2.AddDays(-6);
+
+    var int0 = 0;
+    var int1 = 0;
+    var int2 = 0;
+    var int3 = 0;
+    var int4 = 0;
+    var int5 = 0;
+    var int6 = 0;
+    switch (ViewBag.intweek)
+    {
+        case 1:
+            int0 = 0;
+            int1 = 1;
+            int2 = 2;
+            int3 = 3;
+            int4 = 4;
+            int5 = 5;
+            int6 = 6;
+            break;
+        case 2:
+            int0 = -1;
+            int1 = 0;
+            int2 = 1;
+            int3 = 2;
+            int4 = 3;
+            int5 = 4;
+            int6 = 5;
+            break;
+        case 3:
+            int0 = -2;
+            int1 = -1;
+            int2 = 0;
+            int3 = 1;
+            int4 = 2;
+            int5 = 3;
+            int6 = 4;
+            break;
+        case 4:
+            int0 = -3;
+            int1 = -2;
+            int2 = -1;
+            int3 = -0;
+            int4 = 1;
+            int5 = 2;
+            int6 = 3;
+            break;
+        case 5:
+            int0 = -4;
+            int1 = -3;
+            int2 = -2;
+            int3 = -1;
+            int4 = 0;
+            int5 = 1;
+            int6 = 2;
+            break;
+        case 6:
+            int0 = -5;
+            int1 = -4;
+            int2 = -3;
+            int3 = -2;
+            int4 = -1;
+            int5 = 0;
+            int6 = 1;
+            break;
+        case 0:
+            int0 = -6;
+            int1 = -5;
+            int2 = -4;
+            int3 = -3;
+            int4 = -2;
+            int5 = -1;
+            int6 = 0;
+            break;
+
+
+    }
+
+}
+
+<div class="container text-center">
+    <div class="row text-center table-bordered table-striped">
+
+        <div class="col-sm-2 text-center">
+            <div class="row">Lunes</div>
+            <div class="row">@(dt2.AddDays(int0).ToShortDateString())</div>
+        </div>
+
+        <div class="col-sm-2 text-center">
+            <div class="row">Martes</div>
+            <div class="row">@(dt2.AddDays(int1).ToShortDateString())</div>
+        </div>
+
+        <div class="col-sm-2 text-center">
+            <div class="row">Miercoles</div>
+            <div class="row">@(dt2.AddDays(int2).ToShortDateString())</div>
+        </div>
+
+        <div class="col-sm-2 text-center">
+            <div class="row">Jueves</div>
+            <div class="row">@(dt2.AddDays(int3).ToShortDateString())</div>
+        </div>
+
+        <div class="col-sm-2 text-center">
+            <div class="row">Viernes</div>
+            <div class="row">@(dt2.AddDays(int4).ToShortDateString())</div>
+        </div>
+
+        <div class="text-center">
+            <div class="col-sm-1">
+                <div class="row">Sabado</div>
+                <div class="row">@(dt2.AddDays(int5).ToShortDateString())</div>
+            </div>
+            <div class="col-sm-1">
+                <div class="row">Domingo</div>
+                <div class="row">@(dt2.AddDays(int6).ToShortDateString())</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center">
+    @{
+        dt2 = Convert.ToDateTime(ViewBag.FechaI).Date;
+        //dt2 = dt2.AddDays(-6);
+    }
+    <div class="container-fluid text-center">
+
+        <div class="col-sm-2 text-center">
+            .
+            @foreach (var item in Model)
+            {
+                DateTime dt1 = Convert.ToDateTime(item.FechaHora).Date;
+                if (dt1 == dt2.AddDays(int0).Date)
+                {
+                    string veriClass = item.Verificado.Equals(true) ? "onSale" : "regular";
+                    <div class="row table-bordered img-rounded  panel-body @veriClass navbar-link disabled">
+                        @Html.DisplayFor(Item => item.Descripcion)
+                        @Html.ActionLink("Ver", "Edit", "Temas", new { Id = item.Id }, new { @class = "nav-link disabled" })
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="col-sm-2 text-center">
+            .
+            @foreach (var item in Model)
+            {
+                DateTime dt1 = Convert.ToDateTime(item.FechaHora).Date;
+                if (dt1 == dt2.AddDays(int1).Date)
+                {
+                    string veriClass = item.Verificado.Equals(true) ? "onSale" : "regular";
+                    <div class="row table-bordered  img-rounded   panel-body  @veriClass">
+                        @Html.DisplayFor(Item => item.Descripcion)
+                        @Html.ActionLink("Ver", "Edit", "Temas", new { Id = item.Id }, new { @class = "nav-link disabled" })
+                    </div>
+                }
+            }
+        </div>
+
+
+        <div class="col-sm-2 text-center">
+            .
+            @foreach (var item in Model)
+    {
+        DateTime dt1 = Convert.ToDateTime(item.FechaHora).Date;
+        if (dt1 == dt2.AddDays(int2))
+        {
+            string veriClass = item.Verificado.Equals(true) ? "onSale" : "regular";
+            <div class="row table-bordered  img-rounded   panel-body  @veriClass">
+                @Html.DisplayFor(Item => item.Descripcion)
+                @Html.ActionLink("Ver", "Edit", "Temas", new { Id = item.Id }, new { @class = "nav-link disabled" })
+            </div>
+}
+}
+        </div>
+
+        <div class="col-sm-2 text-center">
+            .
+            @foreach (var item in Model)
+    {
+        DateTime dt1 = Convert.ToDateTime(item.FechaHora).Date;
+        if (dt1 == dt2.AddDays(int3))
+        {
+            string veriClass = item.Verificado.Equals(true) ? "onSale" : "regular";
+            <div class="row table-bordered  img-rounded   panel-body  @veriClass">
+                @Html.DisplayFor(Item => item.Descripcion)
+                @Html.ActionLink("Ver", "Edit", "Temas", new { Id = item.Id }, new { @class = "nav-link disabled" })
+            </div>
+}
+}
+            }
+            }
+        </div>
+
+        <div class="col-sm-2 text-center">
+            .
+            @foreach (var item in Model)
+    {
+        DateTime dt1 = Convert.ToDateTime(item.FechaHora).Date;
+        if (dt1 == dt2.AddDays(int4))
+        {
+            string veriClass = item.Verificado.Equals(true) ? "onSale" : "regular";
+            <div class="row table-bordered  img-rounded   panel-body  @veriClass">
+                @Html.DisplayFor(Item => item.Descripcion)
+                @Html.ActionLink("Ver", "Edit", "Temas", new { Id = item.Id }, new { @class = "nav-link disabled" })
+            </div>
+}
+}
+            }
+            }
+        </div>
+
+        <div class="col-sm-1 text-center">
+            .
+            @foreach (var item in Model)
+    {
+        DateTime dt1 = Convert.ToDateTime(item.FechaHora).Date;
+        if (dt1 == dt2.AddDays(int5))
+        {
+            string veriClass = item.Verificado.Equals(true) ? "onSale" : "regular";
+            <div class="row table-bordered  img-rounded   panel-body  @veriClass">
+                @Html.DisplayFor(Item => item.Descripcion)
+                @Html.ActionLink("Ver", "Edit", "Temas", new { Id = item.Id }, new { @class = "nav-link disabled" })
+            </div>
+}
+}
+            }
+            }
+        </div>
+        <div class="col-sm-1 text-center">
+            .
+
+            @foreach (var item in Model)
+    {
+        DateTime dt1 = Convert.ToDateTime(item.FechaHora).Date;
+        if (dt1 == dt2.AddDays(int6))
+        {
+            string veriClass = item.Verificado.Equals(true) ? "onSale" : "regular";
+            <div class="row table-bordered  img-rounded   panel-body  @veriClass">
+                @Html.DisplayFor(Item => item.Descripcion)
+                @Html.ActionLink("Ver", "Edit", "Temas", new { Id = item.Id }, new { @class = "nav-link disabled" })
+            </div>
+}
+}
+            }
+            }
+        </div>
+    </div>
+</div>
+
+
+

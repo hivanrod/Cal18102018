@@ -1,0 +1,57 @@
+﻿@model Calendario2.Models.Archivo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Archivo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Orden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Orden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tema.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tema.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Origen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Origen)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {  }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

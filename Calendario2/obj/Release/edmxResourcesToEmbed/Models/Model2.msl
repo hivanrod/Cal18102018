@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="xcursorc_calModelStoreContainer" CdmEntityContainer="xcursorc_calEntities">
+    <FunctionImportMapping FunctionImportName="pa_act_temas_pas_hoy_fut" FunctionName="xcursorc_calModel.Store.pa_act_temas_pas_hoy_fut" />
+    <FunctionImportMapping FunctionImportName="pa_sel_tema_diario" FunctionName="xcursorc_calModel.Store.pa_sel_tema_diario">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="xcursorc_calModel.pa_sel_tema_diario_Result">
+          <ScalarProperty Name="Column1" ColumnName="Column1" />
+          <ScalarProperty Name="CUANTAS" ColumnName="CUANTAS" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

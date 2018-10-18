@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Calendario2.Models.Archivo>
+
+@{
+    ViewBag.Title = "Lista de Archivos por Carpeta o Tema ONG VOID";
+}
+
+
+
+
+<table class="tb2">
+    <tr>
+        <td>
+            <h2>Lista de Archivos por Tema - XcursoR - @ViewBag.tema</h2>
+            <h2>@TempData["Msg"]</h2>
+        </td>
+        <td class="SideL">
+            @Html.ActionLink("Nuevo Archivo +", "Create", "", new { @class = "LNK1" })
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+
+@using (Html.BeginForm("Index", "Archivos", FormMethod.Get))
+{
+    <p>
+        @Html.Label("Temas de Archivos - Selecccione para filtrar:")
+
+        @ViewBag.Tema
+    </p>
+}
+<p>
+    @Html.ActionLink("Listado de Carpetas o Temas", "Index", "Temas")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nombre Archivo
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Nombre, "Download", "Downloads", new { ImageName = @item.Nombre.ToString(), Tema = item.Nombre }, null)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

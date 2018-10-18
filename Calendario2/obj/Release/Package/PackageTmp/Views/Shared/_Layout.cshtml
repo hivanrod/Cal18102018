@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Calendario Xcursor ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script lenguage="javascript" type="text/javascript">
+        $(function () {
+            navigator.geolocation.getCurrentPosition(showPosition, positionError);
+            function showPosition(position) {
+                var coordinates = position.coords;
+                $("#lat").val(coordinates.latitude);
+                $("#lon").val(coordinates.longitude);
+            }
+            function positionError(position) {
+                alert("Error::" + position.code);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle btn btn-default btn-lg" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(" CALENDARIO", "Index", "Home", new { area = "" }, new { @class = "btn btn-default btn-lg glyphicon glyphicon-calendar" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Prioridades", "Index", "Prioridades")</li>
+                    <li>@Html.ActionLink("Temas", "Index", "Temas")</li>
+                    <li>@Html.ActionLink("Hoy", "Hoy", "Temas")</li>
+                    <li>@Html.ActionLink("Semana", "Semana", "Temas")</li>
+                    <li>@Html.ActionLink("Mes", "Mes", "Temas")</li>
+                    <li>@Html.ActionLink("Año", "Año", "Temas")</li>
+                    <li>@Html.ActionLink("Contactos", "Index", "Contactos")</li>
+                    <li><a href="https://sgs.xcursor.com/Solicitudes/Create?Length=0" target="_blank">Nueva Mejora</a></li>
+                    @{
+        if (User.IsInRole("Admin"))
+        {
+                <li> @Html.ActionLink("Clientes", "Index", "AspNetUsers") </li>
+                <li> @Html.ActionLink("Roles", "Index", "AspNetRoles") </li>
+}
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Calendario Xcursor ASP.NET < < TOTAL RESPONSIVITY > ></p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Calendario XcursoR";
+}
+<p></p>
+<h2>@TempData["Msg"]</h2>
+<p></p>
+<p></p>
+<div class="row jumbotron">
+    <h1>CALENDARIO WEB</h1>
+    <p class="lead">CALENDARIO ASP.NET XcursoR es un free web framework para controlar Prioridades, Temas y Citas.</p>
+    <p class="lead">Es una App Web que organiza las citas del día a día de forma gratuita.</p>
+    <p class="lead">Puedes registrarte manualmente o automáticamente las diferentes cuentas de redes sociales para controlar muchos calendarios con muchos grupos de trabajo.</p>
+    <p>@Html.ActionLink("Regístrate >>", "Register", "Account", null, new { @class = "btn btn-primary btn-lg" })</p>
+</div>
+<div class="row container bg-success text-center table-responsive table-bordered img-rounded">
+    <div class="col-md-6 text-center">
+        <div style="width: 75px">
+            Columnas:
+            <img src="@(Url.Action("Mychart"))" alt="Imagen simple" />
+            .
+        </div>
+    </div>
+    <div class="col-md-6 text-center">
+        <div style="width: 75px">
+            Pie:
+            <img src="@(Url.Action("BillChart"))" alt="Imagen pie" />
+            .
+        </div>
+    </div>
+</div>
+<div class="row container bg-success text-center table-responsive table-bordered img-rounded">
+    <div class="col-md-6 text-center">
+        <div style="width: 75px">
+            Columnas:
+            <img src="@(Url.Action("Mychart2"))" alt="Imagen simple" />
+
+        </div>            <p class="lead">En éste momento estan registradas (<strong>@TempData["Prioridades"]</strong>) Prioridades y (<strong>@TempData["Temas"]</strong>) Temas con (<strong>@TempData["Citas"]</strong>) Citas.</p>
+
+    </div>
+    <div class="col-md-6 text-center">
+        <div style="width: 75px">
+            Pie:
+            <img src="@(Url.Action("BillChart"))" alt="Imagen pie" />
+            .
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div style="float:left; width: 75px">
+        Latitud:<input id="lat" type="text" />
+    </div>
+</div>
+<div class="col-md-6">
+    <div style="float:left; width: 75px">
+        Longitud:<input id="lon" type="text" />
+    </div>
+</div>
+

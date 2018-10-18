@@ -1,0 +1,149 @@
+﻿@model PagedList.IPagedList<Calendario2.Models.Tema>
+@using PagedList.Mvc;
+@using System.Web.UI.WebControls;
+@{
+    ViewBag.Title = "Temas";
+    var i = 0;
+
+
+    var listItems = new List<ListItem>
+    {
+    new ListItem { Text = "10", Value="10" },
+    new ListItem { Text = "25", Value="25" },
+    new ListItem { Text = "50", Value="50" },
+    new ListItem { Text = "70", Value="70" },
+    new ListItem { Text = "100", Value="100" },
+    new ListItem { Text = "200", Value="200" },
+    };
+}
+ 
+<div class="container text-center">
+    <h2>Listado de Temas Diarios @ViewBag.fecha</h2>
+</div>
+<div class="row container text-center">
+    @TempData["dato"]
+    - @ViewBag.dato @DateTime.Now.AddHours(-5)
+</div>
+<div class="row container text-center">
+    <p></p>
+    @Html.ActionLink("Crear Nuevo Tema", "Create", "Temas", null, new { @class = "btn btn-danger" })
+    <p></p>
+    @using (Html.BeginForm("Index", "Temas", FormMethod.Get))
+    {
+        var estado = ViewBag.Estado;
+        <p>
+            <div class="col-md-10">
+                <div class="row">
+                    Buscar texto en descripción y Notas: @Html.TextBox("SearchString") <input type="submit" value="Buscar" />
+                </div>
+                <div class="row">Total Registros::>>@Model.TotalItemCount</div>
+            </div>
+            <div class="col-md-2">
+                Registros por página: @Html.DropDownList("pageSize", new SelectList(listItems, "Value", "Text"))
+            </div>
+        </p>
+    }
+</div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    IT
+                </th>
+                <th>
+                    @Html.ActionLink("Prioridad", "Index", new { sortOrder = ViewBag.PrioridadSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.pageSize, IdPrioridad = ViewBag.IdPrioridad }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Descripcion", "Index", new { sortOrder = ViewBag.DescripcionSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.pageSize, IdPrioridad = ViewBag.IdPrioridad }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Pasadas", "Index", new { sortOrder = ViewBag.PasadasSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.pageSize, IdPrioridad = ViewBag.IdPrioridad }, null) - #
+
+                </th>
+                <th>
+                    @Html.ActionLink("Hoy", "Index", new { sortOrder = ViewBag.HoySortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.pageSize, IdPrioridad = ViewBag.IdPrioridad }, null) - #
+                </th>
+                <th>
+                    @Html.ActionLink("Futuras", "Index", new { sortOrder = ViewBag.FuturasSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.pageSize, IdPrioridad = ViewBag.IdPrioridad }, null) - #
+                </th>
+                <th>
+                    Notas
+                </th>
+                <th>
+                    Regístro
+                </th>
+                <th>Check</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                var stri = "";
+                var strii = "";
+                var striii = "";
+                var striiii = "";
+                i += 1;
+            <tr>
+                <td>
+                    @i
+                </td>
+                <td>
+                    @Html.ActionLink(item.Prioridad.Nombre, "Index", "Temas", new { @IdPrioridad = item.IdPrioridad }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @{ stri = item.Pasadas.ToString();
+                        strii = item.Hoy.ToString();
+                        striii = item.Futuras.ToString();
+                        striiii = item.Archivos.ToString();
+                        }
+                    @Html.ActionLink("  " + stri, "Historico", null, new { IdPrioridad = item.Prioridad.Id, IdTema = item.Id, TemA = item.Descripcion }, new { @class = "btn btn-warning glyphicon glyphicon-folder-open" })
+                </td>
+                <td>
+                    @Html.ActionLink(" " + strii, "HoyCreate", null, new { IdPrioridad = item.Prioridad.Id, IdTema = item.Id, Tema = item.Descripcion, Verificado = true }, new { @class = "btn btn-primary glyphicon glyphicon-plus" })
+                </td>
+                <td>
+                    @Html.ActionLink(" " + striii, "Futuras", null, new { IdPrioridad = item.Prioridad.Id, IdTema = item.Id, TemA = item.Descripcion }, new { @class = "btn btn-warning glyphicon glyphicon-chevron-right" })
+                </td>
+
+                @using (Html.BeginForm("Ok2", "Temas", FormMethod.Get))
+                {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notas)
+                </td>
+                        <td>
+                            <textarea cols="15" data-val="true" data-val-length-max="2000" id="Notas" name="Notas" rows="2">@item.Notas</textarea>
+                            <input type="hidden" name="Id" id="Id" value="@item.Id" />
+                            <input type="hidden" name="IdPrioridad" id="IdPrioridad" value="@item.IdPrioridad" />
+                            <input type="hidden" name="temad" id="temad" value="@item.Descripcion" />
+                            <input type="hidden" name="IdContacto" id="IdContacto" value="@item.IdContacto" />
+                            <input type="hidden" name="IdUsuario" id="IdUsuario" value="@item.IdUsuario" />
+                            <input type="hidden" name="viene" id="viene" value="Index" />
+                        </td>
+                        <td>
+                            @if (item.IdContacto != item.IdUsuario)
+    {
+                        <button type="submit" id="submit" name="submit" value="Ok2" class="btn glyphicon glyphicon-envelope"></button>
+}
+
+                            <button type="submit" id="submit" name="submit" value="Ok" class="btn btn-success glyphicon glyphicon-ok"></button>
+                            @Html.ActionLink(" ", "Edit", new { id = item.Id, viene = ViewBag.viene }, new { @class = "btn btn-success glyphicon glyphicon-pencil" })
+                            @{ if (stri.Equals("0") && strii.Equals("0") && striii.Equals("0"))
+        { @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger glyphicon glyphicon-remove" }) }
+                            }
+                            <div class="row">
+                                @Html.ActionLink(" " + @striiii, "Index","Archivos", new { id = item.Id, viene = ViewBag.viene }, new { @class = "btn btn-danger glyphicon glyphicon-cloud-upload" })
+                            </div>
+
+                        </td>
+                  }
+            </tr>
+              }
+          }
+        </table>
+        Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, SearchString = ViewBag.SearchString, pageSize = ViewBag.pageSize }))
+
+    </div>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="xcursorc_calModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="xcursorc_calEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="pa_act_temas_pas_hoy_fut">
+      <Parameter Name="user" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="pa_sel_tema_diario" ReturnType="Collection(xcursorc_calModel.pa_sel_tema_diario_Result)">
+      <Parameter Name="user" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="pa_sel_tema_diario_Result">
+    <Property Type="DateTime" Name="Column1" Nullable="true" />
+    <Property Type="Int32" Name="CUANTAS" Nullable="true" />
+  </ComplexType>
+</Schema>

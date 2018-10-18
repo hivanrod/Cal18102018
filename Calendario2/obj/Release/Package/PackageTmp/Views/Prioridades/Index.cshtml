@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Calendario2.Models.Prioridad>
+
+@{
+    ViewBag.Title = "Listado de Prioridades";
+    var i = 0;
+}
+<div class="container text-center">
+    <h2>@ViewBag.Title</h2>
+    </div>
+<div class="container text-center">
+
+    <p>
+        @Html.ActionLink("Crear Nueva Prioridad", "Create", "Prioridades", null, new { @class = "btn btn-danger" })
+    </p>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    IT
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Orden)
+                </th>
+                <th>Tema - #</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                i += 1;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Nombre, "Index", "Temas", new { @IdPrioridad = item.Id }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(itenModel => item.Orden)
+
+                    </td>
+                    <td>
+                        @{
+                            var stri = item.Temas.Count.ToString();
+                        }
+                        @(Html.ActionLink(" " + stri, "Create", "Temas", new { IdPrioridad = item.Id, Tema = item.Nombre }, new { @class = "btn btn-warning glyphicon glyphicon-plus" }))
+                    </td>
+                    <td>
+                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-success glyphicon glyphicon-pencil" })
+
+                        @{ if (stri.Equals("0")) { @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger glyphicon glyphicon-remove" }) } }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>

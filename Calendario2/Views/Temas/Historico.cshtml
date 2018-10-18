@@ -1,0 +1,228 @@
+﻿@model IEnumerable<Calendario2.Models.Tema>
+@{
+    ViewBag.Title = "Histórico Calendario Xcursor";
+}
+<div class="container text-center">
+    <h2>@ViewBag.Title</h2>
+</div>
+<div class="container table-responsive">
+
+    <div class="row table-bordered">
+        <div class="col-md-2 text-center">
+            <h3></h3>
+        </div>
+        <div class="col-md-8 text-center table-bordered">
+            <h2><strong>@ViewBag.tema</strong></h2>
+        </div>
+        <div class="col-md-2 text-center">
+            <h3></h3>
+        </div>
+    </div>
+</div>
+
+
+<div class="container row text-center table-bordered">
+    <div class="col-md-3 text-center">Total Ingreso</div>
+    <div class="col-md-3 table-bordered">Total Presupuesto</div>
+    <div class="col-md-3 text-center table-bordered">Total Pagos</div>
+    <div class="col-md-3">Total Compras</div>
+</div>
+<div class="container row text-center table-bordered">
+    <div class="col-md-3 text-center">
+        @{
+            try
+            {
+                @(string.Format("{0:C}", ViewBag.totIngreso))
+            }
+            catch
+            {
+                @("$0");
+            }
+        }
+    </div>
+    <div class="col-md-3 text-center table-bordered">
+        @{
+            try
+            {
+                @(string.Format("{0:C}", ViewBag.totPresupuesto))
+            }
+            catch
+            {
+                @("$0");
+            }
+        }
+    </div>
+    <div class="col-md-3 text-center table-bordered">
+        @{
+            try
+            {
+                @(string.Format("{0:C}", ViewBag.totPagos))
+            }
+            catch
+            {
+                @("$0")
+            }
+        }
+    </div>
+    <div class="col-md-3">
+        @{
+            try
+            {
+                @(string.Format("{0:C}", ViewBag.totCompras))
+            }
+            catch
+            {
+                @("$0")
+            }
+
+        }
+    </div>
+</div>
+
+
+
+
+<div class="container table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaHora)
+            </th>
+            <th>
+                <div class="row">
+                    @Html.DisplayNameFor(model => model.Verificado)
+                </div>
+                <div class="row">
+                    @Html.DisplayNameFor(model => model.Notas)
+                </div>
+                <div class="row">
+                    @Html.DisplayNameFor(model => model.VerificaFechaHora)
+                </div>
+                <div class="row">
+                    @Html.DisplayNameFor(model => model.Ingreso)
+                </div>
+                <div class="row">
+                    @Html.DisplayNameFor(model => model.Presupuesto)
+                </div>
+                <div class="row">
+                    @Html.DisplayNameFor(model => model.Compras)
+                </div>
+                <div class="row">
+                    @Html.DisplayNameFor(model => model.Pagos)
+                </div>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaHora)
+                </td>
+                <td>
+                    @{
+                        string veriClass = item.Verificado.Equals(true) ? "onSale" : "regular";
+                    }
+                    <div class="@veriClass">
+                        <div class="row">
+                            @Html.LabelFor(modelItem => item.Verificado) :
+                            @Html.CheckBoxFor(modelItem => item.Verificado.HasValue, new { @class = "form-control" })
+                        </div>
+                        <div class="row">
+                            @Html.TextAreaFor(modelItem => item.Notas, new { @cols = 30, @rows = 2 })
+                        </div>
+                        <div class="row">
+                            @Html.DisplayFor(modelItem => item.VerificaFechaHora)
+                        </div>
+                        <div class="row">
+                            <strong>
+                                @{
+                try
+                {
+                    if (!String.IsNullOrEmpty(item.Ingreso.ToString()))
+                    {
+                        @("Ingreso:") @Html.DisplayFor(modelItem => item.Ingreso)
+}
+}
+catch
+{
+                    @("$0")
+}
+                                }
+                            </strong>
+                        </div>
+                        <div class="row">
+                            <strong>
+                                @{
+                try
+                {
+                    if (!String.IsNullOrEmpty(item.Presupuesto.ToString()))
+                    {
+                        @("Presupuesto:") @Html.DisplayFor(modelItem => item.Presupuesto);
+}
+
+}
+catch
+{
+                    @("$0")
+}
+                                }
+                            </strong>
+                        </div>
+                        <div class="row">
+                            <strong>
+
+                                @{
+                try
+                {
+
+
+                    if (!String.IsNullOrEmpty(item.Compras.ToString()))
+                    {
+                        @("Compras:") @Html.DisplayFor(modelItem => item.Compras)
+}
+}
+catch
+{
+                    @("$0")
+}
+                                }
+                            </strong>
+                        </div>
+                        <div class="row">
+                            <strong>
+                                @{
+                try
+                {
+
+                    if (!String.IsNullOrEmpty(item.Pagos.ToString()))
+                    {
+                        @("Pagos:") @Html.DisplayFor(modelItem => item.Pagos)
+}
+}
+catch
+{
+                    @("$0")
+}
+                                }
+                            </strong>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-success glyphicon glyphicon-pencil" })
+                    @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-info glyphicon glyphicon-list-alt" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger glyphicon glyphicon-remove" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
