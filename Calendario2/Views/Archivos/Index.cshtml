@@ -11,7 +11,7 @@
     <tr>
         <td>
             <h2>Lista de Archivos por Tema - XcursoR</h2>
-            <p>@ViewBag.tema</p>
+            <h1>@ViewBag.Nombre</h1>
             <h2>@TempData["Msg"]</h2>
         </td>
         <td class="SideL">
@@ -45,12 +45,12 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.Nombre, "Download", "Downloads", new { ImageName = @item.Nombre.ToString(), Tema = item.Nombre }, null)
+                @Html.ActionLink(item.Nombre, "Download", "Downloads", new { ImageName = @item.Nombre.ToString(), Nombre = ViewBag.IdTema.ToString() }, null)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id, @Nombre = ViewBag.Nombre })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id, @Nombre = ViewBag.Tema })
             </td>
         </tr>
     }

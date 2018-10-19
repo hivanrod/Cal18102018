@@ -216,6 +216,7 @@
     <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\CodeFile1.cs" />
     <Compile Include="Controllers\ContactosController.cs" />
+    <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Prioridad2Controller.cs" />
@@ -636,7 +637,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Shared\Upload\" />
+    <Folder Include="Views\Downloads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

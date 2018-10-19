@@ -34,9 +34,9 @@
     {
         @Html.AntiForgeryToken()
         <div class="form-actions no-color">
-            <input type="hidden" name="Nombre" id="Nombre" value="@ViewBag.Nombre" />
+            <input type="hidden" name="IdTema" id="IdTema" value="@ViewBag.IdTema" />
             <input type="submit" value="Delete" class="btn alert-danger" /> |
-            @Html.ActionLink("Back to List", "Index","Archivos",new { @id=ViewBag.IdTema, @Nombre= ViewBag.Nombre },null)
+            @Html.ActionLink("Back to List", "Index","Archivos",new { @id=ViewBag.IdTema, @Nombre= ViewBag.Nombre, @IdTema = ViewBag.IdTema },null)
         </div>
     }
 </div>

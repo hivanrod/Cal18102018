@@ -140,6 +140,10 @@ namespace Calendario.Controllers
             {
                 string currentUserId = User.Identity.GetUserId();
                 IdUser = currentUserId;
+                // *****************Se actualizan los campos de historico hoy y futuras *************///
+                db2.pa_act_temas_pas_hoy_fut(IdUser);
+                // **********************************************************************************///
+
             }
             tem9 = tem9.Where(s => s.FechaHora < Fecha01);
             tem9 = tem9.Where(s => s.UserId.Equals(IdUser));
@@ -184,6 +188,10 @@ namespace Calendario.Controllers
             {
                 string currentUserId = User.Identity.GetUserId();
                 IdUser = currentUserId;
+                // *****************Se actualizan los campos de historico hoy y futuras *************///
+                db2.pa_act_temas_pas_hoy_fut(IdUser);
+                // **********************************************************************************///
+
             }
             tem10 = tem10.Where(s => s.FechaHora > Fecha01);
             tem10 = tem10.Where(s => s.UserId.Equals(IdUser));
@@ -239,6 +247,10 @@ namespace Calendario.Controllers
             {
                 string currentUserId = User.Identity.GetUserId();
                 IdUser = currentUserId;
+                // *****************Se actualizan los campos de historico hoy y futuras *************///
+                db2.pa_act_temas_pas_hoy_fut(IdUser);
+                // **********************************************************************************///
+
             }
             //if (IdUser != null && !User.IsInRole("Admin"))
             //{

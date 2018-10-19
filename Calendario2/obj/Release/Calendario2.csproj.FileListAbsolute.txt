@@ -299,4 +299,3 @@ Z:\Calendario2\Calendario2\obj\Release\Calendario2.csproj.GenerateResource.Cache
 Z:\Calendario2\Calendario2\obj\Release\Calendario2.csproj.CoreCompileInputs.cache
 Z:\Calendario2\Calendario2\obj\Release\Calendario2.dll
 Z:\Calendario2\Calendario2\obj\Release\Calendario2.pdb
-C:\Users\hivanr\source\repos\Calendario2\Calendario2\obj\Release\Calendario2.csprojResolveAssemblyReference.cache

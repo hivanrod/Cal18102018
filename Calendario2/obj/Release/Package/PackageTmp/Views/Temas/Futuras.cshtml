@@ -224,6 +224,10 @@ catch
                     @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-success glyphicon glyphicon-pencil" })
                     @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-info glyphicon glyphicon-list-alt" })
                     @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger glyphicon glyphicon-remove" })
+                    <div class="row">
+                        @Html.ActionLink(" " + item.Archivos, "Index", "Archivos", new { id = item.Id, viene = ViewBag.viene, Nombre = item.Descripcion }, new { @class = "btn btn-danger glyphicon glyphicon-cloud-upload" })
+                    </div>
+
                 </td>
             </tr>
         }
