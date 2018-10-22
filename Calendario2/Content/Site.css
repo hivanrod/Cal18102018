@@ -43,3 +43,10 @@ textarea {
 .tb2 {
     width: 100%;
 }
+#nav ul {
+    display: none;
+}
+
+#nav li:hover > ul {
+    display: block;
+}

@@ -31,7 +31,7 @@
 
 @{ DateTime dt2 = Convert.ToDateTime(ViewBag.FechaI).Date;
     //dt2 = dt2.AddDays(-6);
-
+    var mes  = new string[] {"", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" };
     var int0 = 0;
     var int1 = 0;
     var int2 = 0;
@@ -110,44 +110,44 @@
 
 
 
-        }
+}
 
 <div class="container text-center">
     <div class="row text-center table-bordered table-striped">
 
         <div class="col-sm-2 text-center">
             <div class="row">Lunes</div>
-            <div class="row">@(dt2.AddDays(int0).ToShortDateString())</div>
+            <div class="row">@Html.ActionLink(dt2.AddDays(int0).Day.ToString() + "-" + mes[dt2.AddDays(int0).Month] + "-" +  dt2.AddDays(int0).Year.ToString(), "Hoy",new { @Fecha = dt2.AddDays(int0).Day.ToString() + "-" + dt2.AddDays(int0).Month.ToString() + "-" + dt2.AddDays(int0).Year.ToString() } )</div>
         </div>
 
         <div class="col-sm-2 text-center">
             <div class="row">Martes</div>
-            <div class="row">@(dt2.AddDays(int1).ToShortDateString())</div>
+            <div class="row">@Html.ActionLink(dt2.AddDays(int1).Day.ToString() + "-" + mes[dt2.AddDays(int1).Month] + "-" + dt2.AddDays(int1).Year.ToString(), "Hoy", new { @Fecha = dt2.AddDays(int1).Day.ToString() + "-" + dt2.AddDays(int1).Month.ToString() + "-" + dt2.AddDays(int1).Year.ToString() })</div>
         </div>
 
         <div class="col-sm-2 text-center">
             <div class="row">Miercoles</div>
-            <div class="row">@(dt2.AddDays(int2).ToShortDateString())</div>
+            <div class="row">@Html.ActionLink(dt2.AddDays(int2).Day.ToString() + "-" + mes[dt2.AddDays(int2).Month] + "-" + dt2.AddDays(int2).Year.ToString(), "Hoy", new { @Fecha = dt2.AddDays(int2).Day.ToString() + "-" + dt2.AddDays(int2).Month.ToString() + "-" + dt2.AddDays(int2).Year.ToString() })</div>
         </div>
 
         <div class="col-sm-2 text-center">
             <div class="row">Jueves</div>
-            <div class="row">@(dt2.AddDays(int3).ToShortDateString())</div>
+            <div class="row">@Html.ActionLink(dt2.AddDays(int3).Day.ToString() + "-" + mes[dt2.AddDays(int3).Month] + "-" + dt2.AddDays(int3).Year.ToString(), "Hoy", new { @Fecha = dt2.AddDays(int3).Day.ToString() + "-" + dt2.AddDays(int3).Month.ToString() + "-" + dt2.AddDays(int3).Year.ToString() })</div>
         </div>
 
         <div class="col-sm-2 text-center">
             <div class="row">Viernes</div>
-            <div class="row">@(dt2.AddDays(int4).ToShortDateString())</div>
+            <div class="row">@Html.ActionLink(dt2.AddDays(int4).Day.ToString() + "-" + mes[dt2.AddDays(int4).Month] + "-" + dt2.AddDays(int4).Year.ToString(), "Hoy", new { @Fecha = dt2.AddDays(int4).Day.ToString() + "-" + dt2.AddDays(int4).Month.ToString() + "-" + dt2.AddDays(int4).Year.ToString() })</div>
         </div>
 
         <div class="text-center">
             <div class="col-sm-1">
                 <div class="row">Sabado</div>
-                <div class="row">@(dt2.AddDays(int5).ToShortDateString())</div>
+                <div class="row">@Html.ActionLink(dt2.AddDays(int5).Day.ToString() + "-" + mes[dt2.AddDays(int5).Month] + "-" + dt2.AddDays(int5).Year.ToString(), "Hoy", new { @Fecha = dt2.AddDays(int5).Day.ToString() + "-" + dt2.AddDays(int5).Month.ToString() + "-" + dt2.AddDays(int5).Year.ToString() })</div>
             </div>
             <div class="col-sm-1">
                 <div class="row">Domingo</div>
-                <div class="row">@(dt2.AddDays(int6).ToShortDateString())</div>
+                <div class="row">@Html.ActionLink(dt2.AddDays(int6).Day.ToString() + "-" + mes[dt2.AddDays(int6).Month] + "-" + dt2.AddDays(int6).Year.ToString(), "Hoy", new { @Fecha = dt2.AddDays(int6).Day.ToString() + "-" + dt2.AddDays(int6).Month.ToString() + "-" + dt2.AddDays(int6).Year.ToString() })</div>
             </div>
         </div>
     </div>

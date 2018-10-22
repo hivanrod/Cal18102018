@@ -33,9 +33,34 @@
                 </button>
                 @Html.ActionLink(" CALENDARIO", "Index", "Home", new { area = "" }, new { @class = "btn btn-default btn-lg glyphicon glyphicon-calendar" })
             </div>
+
+            <ul id="nav">
+                <li><a href="#">Menu1</a></li>
+                <li><a href="#">Menu2</a></li>
+                <li><a href="#">Menu3</a></li>
+                <li>
+                    @Html.ActionLink("Prioridades", "Index", "Prioridades")
+                    <ul>
+                        <li><a href="#">SubMenu1</a></li>
+                        <li><a href="#">SubMenu2</a></li>
+                        <li>
+                            <a href="#">SubMenu3</a>
+                            <ul>
+                                <li><a href="#">SubMenu11</a></li>
+                                <li><a href="#">SubMenu22</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Prioridades", "Index", "Prioridades")</li>
+                    <li class="nav dropdown">
+                        @Html.ActionLink("Prioridades", "Index", "Prioridades" )
+                    </li>
                     <li>@Html.ActionLink("Temas", "Index", "Temas")</li>
                     <li>@Html.ActionLink("Hoy", "Hoy", "Temas")</li>
                     <li>@Html.ActionLink("Semana", "Semana", "Temas")</li>
@@ -51,9 +76,9 @@
 }
                     }
                 </ul>
-                @Html.Partial("_LoginPartial")
+            @Html.Partial("_LoginPartial")
 
-            </div>
+        </div>
         </div>
     </div>
     <div class="container body-content">
